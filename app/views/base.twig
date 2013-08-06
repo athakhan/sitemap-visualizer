@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="en">
+  <head>
+    <title>Sitemap Visualizer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ app.request.baseUrl ~ '/css/bootstrap.min.css' }}" rel="stylesheet">
+    <link href="{{ app.request.baseUrl ~ '/css/bootstrap-responsive.min.css' }}" rel="stylesheet">
+    <link href="{{ app.request.baseUrl ~ '/css/jquery.fancybox.css' }}" rel="stylesheet">
+    <link href="{{ app.request.baseUrl ~ '/css/default.css' }}" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+{% block body %}{% endblock %}
+    </div>
+    <script src="{{ app.request.baseUrl ~ '/js/jquery-1.8.1.min.js' }}"></script>
+    <script src="{{ app.request.baseUrl ~ '/js/jquery.masonry.min.js' }}"></script>
+    <script src="{{ app.request.baseUrl ~ '/js/jquery.fancybox.js' }}"></script>
+    <script src="{{ app.request.baseUrl ~ '/js/bootstrap.min.js' }}"></script>
+    <script>
+      (function($) {
+        $(document).ready(function($) {
+          var container = $('.container');
+          container.imagesLoaded(function() {
+            // apply masonry layout
+            container.masonry({
+              'itemSelector': '.site'
+            });
+            // reload masonry layout on window resize
+            $(window).bind('resize', function() {
+              container.masonry('reload');
+            });
+            // create lightbox effect
+            $('.link').fancybox({
+              'openEffect': 'fade',
+              'closeEffect': 'fade',
+            });
+          });
+        });
+      })(jQuery);
+    </script>
+  </body>
+</html>
