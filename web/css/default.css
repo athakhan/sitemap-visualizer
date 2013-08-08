@@ -1,6 +1,7 @@
 body {
   font-family: "helvetica neue",arial,sans-serif;
   font-size: 10px;
+  margin: 4px;
   color: #211922;
   background-color: #efefef; }
 p {
@@ -14,19 +15,23 @@ a {
 
 .wrapper {
   width: auto;
-  margin: 0 auto 10px;
   border: none; }
 
-.column {
+.navbar {
+  margin-bottom: 5px; }
+
+.section {
   float: left;
-  width: 100%; }
-  .site {
+  width: 100%;
+  padding-bottom: 5px; }
+  .microsite {
     float: left;
     clear: right;
-    margin: 10px 0 10px 10px;
-    padding: 10px 10px 1px;
+    position: relative;
+    margin: 0 0 10px 10px;
+    padding: 10px 10px 10px;
     font-size: 11px;
-    background-color: white;
+    background-color: #fefefe;
     box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
     -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
     -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4); }
@@ -54,11 +59,37 @@ a {
         height: 205px;
         overflow: hidden;
         background-color: #F2F0F0; }
-    .description {
-      margin: 10px 0 5px;
-      height: 14px;
-      overflow: hidden;
-      word-wrap: break-word; }
-    .stats {
-      overflow: hidden;
-      color: #8C7E7E; }
+      .description {
+        margin: 10px 0 5px;
+        height: 14px;
+        overflow: hidden;
+        word-wrap: break-word; }
+    .metadata {
+      height: 160px;
+      overflow: hidden; }
+      .title {
+        font-weight: bold; }
+      .metadata p {
+        height: auto;
+        margin-bottom: 2px;
+        margin-top: 4px; }
+      .metadata .info {
+        overflow: hidden;
+        color: #8C7E7E; }
+        .info h6 {
+          font-size: 1em;
+          margin: 0;
+          line-height: 1.5em;
+          color: #cc0000; }
+        .info a {
+          color: #00aeef;
+          font-weight: normal; }
+    .icons {
+      position: absolute;
+      right: 5px;
+      top: 5px; }
+    .redirect {}
+      .redirect .metadata .title {
+        text-decoration: line-through; }
+      .redirect .metadata .description {
+        text-decoration: line-through; }

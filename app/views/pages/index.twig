@@ -1,1 +1,79 @@
 {% extends 'base.twig' %}
+
+{% block body %}
+<div class="navbar clearfix">
+      <ul id="sitemap" class="nav navbar-nav">
+{% for section, microsites in records %}
+        <li><a href="#{{ section }}">{{ section|header }}</a></li>
+{% endfor %}
+      </ul>
+</div>
+
+      <div class="tab-content">
+{% for section, microsites in records %}
+        <div id="{{ section }}" class="tab-pane section">
+{% for microsite in microsites %}
+{% set classes = '' %}
+{% set error = '' %}
+{% if microsite.error %}
+{% set error = ' data-error="' ~ microsite.error ~ '"' %}
+{% set classes = classes ~ ' error' %}
+{% endif %}
+{% set redirect = '' %}
+{% if microsite.redir %}
+{% set redirect = ' data-redirect="' ~ microsite.redir ~ '"' %}
+{% set classes = classes ~ ' redirect' %}
+{% endif %}
+          <div class="span2 microsite{{ classes }}"{{ error|raw }}{{ redirect|raw }}>
+            <div class="screenshot">
+              <a href="{{ microsite.images|image('crop.png') }}" class="link">
+                <img src="{{ microsite.images|image('thumb.png') }}" class="image" alt="{{ microsite.title }}" />
+              </a>
+            </div>
+            <div class="metadata">
+              <div class="info">
+                <h6>{{ microsite.title }}</h6>
+                <div class="url"><a href="{{ microsite.destination }}" target="_blank">{{ microsite.url }}</a></div>
+                <div class="template">{{ microsite.template }}</div>
+              </div>
+{% if microsite.metadata %}
+              <p class="title">{{ microsite.metadata.title }}</p>
+              <p class="description">{{ microsite.metadata.description }}</p>
+{% endif %}
+            </div>
+            <div class="icons"></div>
+          </div>
+{% endfor %}
+        </div>
+{% endfor %}
+      </div>
+{% endblock %}
+{% block footer %}
+    <script>
+      (function($) {
+        $(document).ready(function($) {
+          $('#sitemap a:first').tab('show');
+          $('#sitemap a').click(function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+          });
+          $('.link').fancybox({
+            'openEffect': 'fade',
+            'closeEffect': 'fade',
+          });
+          $('.microsite').each(function() {
+            var self = $(this),
+                icons = self.find('.icons');
+            if (self.data('error')) {
+              console.log('error', self);
+              $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_cancel.png' }}').appendTo(icons);
+            }
+            if (self.data('redirect')) {
+              console.log('redirect', self);
+              $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_sync.png' }}').appendTo(icons);
+            }
+          });
+        });
+      })(jQuery);
+    </script>
+{% endblock %}
