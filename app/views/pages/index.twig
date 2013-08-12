@@ -65,11 +65,9 @@
             var self = $(this),
                 icons = self.find('.icons');
             if (self.data('error')) {
-              console.log('error', self);
               $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_cancel.png' }}').appendTo(icons);
             }
             if (self.data('redirect')) {
-              console.log('redirect', self);
               $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_sync.png' }}').appendTo(icons);
             }
           });
