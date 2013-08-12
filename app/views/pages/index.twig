@@ -26,7 +26,7 @@
 {% endif %}
           <div class="span2 microsite{{ classes }}"{{ error|raw }}{{ redirect|raw }}>
             <div class="screenshot">
-              <a href="{{ microsite.images|image('crop.png') }}" class="link">
+              <a href="{{ microsite.images|image('crop.png') }}" class="link" rel="{{ section }}">
                 <img src="{{ microsite.images|image('thumb.png') }}" class="image" alt="{{ microsite.title }}" />
               </a>
             </div>
@@ -57,19 +57,25 @@
             e.preventDefault();
             $(this).tab('show');
           });
-          $('.link').fancybox({
-            'openEffect': 'fade',
-            'closeEffect': 'fade',
-          });
-          $('.microsite').each(function() {
-            var self = $(this),
-                icons = self.find('.icons');
-            if (self.data('error')) {
-              $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_cancel.png' }}').appendTo(icons);
-            }
-            if (self.data('redirect')) {
-              $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_sync.png' }}').appendTo(icons);
-            }
+          var container = $('.container');
+          container.imagesLoaded(function() {
+            container.masonry({
+              'itemSelector': '.microsite'
+            });
+            $('a.link').attr('rel', 'gallery').fancybox({
+              'openEffect': 'fade',
+              'closeEffect': 'fade',
+            });
+            $('.microsite').each(function() {
+              var self = $(this),
+                  icons = self.find('.icons');
+              if (self.data('error')) {
+                $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_cancel.png' }}').appendTo(icons);
+              }
+              if (self.data('redirect')) {
+                $('<img></img>').attr('src', '{{ app.request.baseUrl ~ '/css/icon_sync.png' }}').appendTo(icons);
+              }
+            });
           });
         });
       })(jQuery);
