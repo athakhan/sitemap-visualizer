@@ -1,0 +1,19 @@
+{% extends 'base.twig' %}
+
+{% block body %}
+<ul>
+{% spaceless %}
+{% for section, microsites in records %}
+    {% for microsite in microsites %}
+        {% if not microsite.error and microsite.url %}
+            {% if microsite.redir %}
+                <li><a href="{{ root }}{{ microsite.url }}">{{ microsite.url }}</a> &raquo; <a href="">{{ microsite.destination }}</a></li>
+            {% else %}
+                <li><a href="{{ root }}{{ microsite.url }}">{{ microsite.url }}</a></li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+{% endspaceless %}
+</ul>
+{% endblock %}

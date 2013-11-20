@@ -62,5 +62,25 @@ $app->get('/', function() use ($app) {
   return $app['twig']->render('pages/index.twig', array('records' => $records));
 })->bind('index');
 
+/** Dump sitemap route. */
+$app->get('/dump', function() use ($app) {
+  $jsonfile = __DIR__ . '/assets/sitemap.json';
+  if (file_exists($jsonfile)) {
+    $jsondata = json_decode(file_get_contents($jsonfile));
+    $records = array();
+    foreach ($jsondata as $record) {
+      $section = !empty($record->section) ? $record->section : 'homepage';
+      if (!isset($records[$section])) {
+        $records[$section] = array();
+      }
+      $records[$section][] = $record;
+    }
+  }
+
+  return $app['twig']->render('pages/dump.twig', array('records' => $records, 'root' => 'http://msnlatino.telemundo.com/'));
+})->bind('dump');
+
 /** Run! */
 $app->run();
+
+# vi: set ts=2 sw=2 :
